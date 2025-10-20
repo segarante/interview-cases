@@ -10,5 +10,5 @@ Para que possamos te conhecer melhor, elaboramos desafios específicos para cada
 
 Clique no link abaixo e BOA SORTE! 🍀
 
-- [Frontend Challenge](https://github.com/segarante/vagas/tree/main/frontend-challenge)
-- [Backend Challenge](https://github.com/segarante/vagas/tree/main/backend-challenge)
+- [Frontend Challenge](https://github.com/segarante/interview-cases/tree/main/frontend-challenge)
+- [Backend Challenge](https://github.com/segarante/interview-cases/tree/main/backend-challenge)
