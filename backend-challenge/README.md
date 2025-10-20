@@ -1,7 +1,3 @@
-<p align="center">
-  <img src="https://github.com/segarante/interview-cases/blob/main/banner_segarante.jpg">
-</p>
-
 # Bem vindo aos desafios de Backend da Segarante
 
 Num dia comum aqui na Segarante, é provavel que você encontre diversas tarefas que precisam ser feitas para ajudar o time a completar a sprint. Umas mais faceis e outras nem tanto, umas semelhantes a alguma que você ja fez antes e outras que vão te trazer um novo desafio.
