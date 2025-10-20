@@ -1,16 +1,17 @@
-# Segarante Tech Challenge 🚀
+<p align="center">
+  <img src="https://github.com/segarante/interview-cases/blob/main/banner_segarante.jpg">
+</p>
 
-![Segarante](https://www.segarante.com.br/logo-segarante.png)
+# Bem vindo aos desafios de Backend da Segarante
 
-## Sobre nós
+Num dia comum aqui na Segarante, é provavel que você encontre diversas tarefas que precisam ser feitas para ajudar o time a completar a sprint. Umas mais faceis e outras nem tanto, umas semelhantes a alguma que você ja fez antes e outras que vão te trazer um novo desafio.
 
-A Segarante é a plataforma SaaS líder em gestão digital de Seguro Garantia no Brasil. Transformamos um mercado complexo e regulado em processos digitais eficientes e escaláveis. Nossa missão é revolucionar o ciclo completo do seguro garantia — da cotação à baixa — com tecnologia, automação e inteligência artificial, democratizando o acesso e entregando controle total para o ecossistema de seguros.
+Trouxemos aqui algumas tarefas. Escolha aquela a qual achar que poderá mostrar melhor o que você sabe.
 
-## Nossos desafios 💻
+Boa sorte. :D
 
-Para que possamos te conhecer melhor, elaboramos desafios específicos para cada área. Testaremos seus conhecimentos técnicos, capacidade de resolução de problemas e qualidade de código em contextos reais da plataforma Segarante.
+## Desafios
 
-Clique no link abaixo e BOA SORTE! 🍀
-
-- [Frontend Challenge](https://github.com/segarante/interview-cases/tree/main/frontend-challenge)
-- [Backend Challenge](https://github.com/segarante/interview-cases/tree/main/backend-challenge)
+- [Backend desafio 1](https://github.com/segarante/interview-cases/tree/main/backend-challenge/desafio1)
+- [Backend desafio 2](https://github.com/segarante/interview-cases/tree/main/backend-challenge/desafio2)
+- [Backend desafio 3](https://github.com/segarante/interview-cases/tree/main/backend-challenge/desafio3)
