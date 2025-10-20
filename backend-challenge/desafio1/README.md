@@ -1,7 +1,3 @@
-<p align="center">
-  <img src="https://github.com/segarante/interview-cases/banner_segarante.jpg">
-</p>
-
 # Segarante - Backend Desafio 1
 
 ## O desafio
