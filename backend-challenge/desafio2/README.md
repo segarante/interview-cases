@@ -1,7 +1,3 @@
-<p align="center">
-  <img src="https://github.com/segarante/interview-cases/banner_segarante.jpg">
-</p>
-
 # Segarante - Backend Desafio 2
 
 Uma seguradora oferece aos seus clientes pacotes personalizados para suas necessidades especificas sem que eles precisem entendem nada sobre seguros.
