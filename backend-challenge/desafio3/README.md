@@ -45,14 +45,14 @@ Endossos são **imutáveis**: não podem ser editados nem apagados.
 
 Os tipos de endosso devem ser determinados automaticamente a partir das diferenças entre os dados informados e os dados vigentes da apólice.
 
-| Tipo                            | Descrição                           |
-| ------------------------------- | ----------------------------------- |
-| `aumento_is`                    | Aumenta a importância segurada (IS) |
-| `reducao_is`                    | Reduz a importância segurada (IS)   |
-| `alteracao_vigencia`            | Altera o período de vigência        |
-| `aumento_is_alteracao_vigencia` | Aumenta a IS e altera a vigência    |
-| `reducao_is_alteracao_vigencia` | Reduz a IS e altera a vigência      |
-| `cancelamento`                  | Cancela o último endosso válido     |
+| Tipo                            | Descrição                               |
+| ------------------------------- | ----------------------------------------|
+| `aumento_is`                    | Aumenta a importância segurada (IS)     |
+| `reducao_is`                    | Reduz a importância segurada (IS)       |
+| `alteracao_vigencia`            | Altera o fim da vigência                |
+| `aumento_is_alteracao_vigencia` | Aumenta a IS e altera o fim da vigência |
+| `reducao_is_alteracao_vigencia` | Reduz a IS e altera o fim da vigência   |
+| `cancelamento`                  | Cancela o último endosso válido         |
 
 ---
 
