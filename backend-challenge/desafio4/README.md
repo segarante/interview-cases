@@ -50,7 +50,7 @@ O foco **não** é corrigir pequenos bugs no código existente — é pensar na 
 ### Formato
 
 - **Sessão de live coding**, conduzida junto com o entrevistador.
-pl**Você não precisa escrever código.** A entrega esperada é a **discussão da arquitetura**: apontar os problemas, justificar trade-offs e planejar a evolução.
+- **Você não precisa escrever código.** A entrega esperada é a **discussão da arquitetura**: apontar os problemas, justificar trade-offs e planejar a evolução.
 - Se em algum momento quiser ilustrar uma ideia com um trecho de código, fique à vontade — mas isso é opcional e não faz parte do que está sendo avaliado.
 
 ---
