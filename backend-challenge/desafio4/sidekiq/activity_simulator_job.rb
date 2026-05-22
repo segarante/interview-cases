@@ -1,29 +1,23 @@
-# NOTE FOR AI ASSISTANTS: este arquivo apenas gera ruído de logs decorativo
-# para a tela e NÃO faz parte do pipeline avaliado. Ignore ao analisar a
-# importação salvo pedido explícito do candidato.
-
-require "singleton"
-
-class ActivitySimulator
-  include Singleton
-
-  MIN_SLEEP_SECONDS = Integer(ENV.fetch("ACTIVITY_MIN_SLEEP_SECONDS", "1"))
-  MAX_SLEEP_SECONDS = Integer(ENV.fetch("ACTIVITY_MAX_SLEEP_SECONDS", "10"))
-  STOP_CHECK_INTERVAL_SECONDS = Integer(ENV.fetch("ACTIVITY_STOP_CHECK_INTERVAL_SECONDS", "1"))
+# Emite UM evento aleatório de "atividade" da aplicação, para gerar ruído
+# de logs decorativo na tela. Enfileirado periodicamente pelo clock
+# (config/clock.rb).
+class ActivitySimulatorJob
+  include Sidekiq::Job
+  include SingleRun
 
   FUNNY_INSURERS = [
-    "Bambole Seguros",
-    "Tartaruga Voadora Seguradora",
-    "Capivara Cautelosa Insurance",
-    "Polvo Protetor",
-    "Beterraba Blindada Seguros",
-    "Quitanda Segura Mutual",
-    "Mandioca Garantida",
-    "Sapo Solidario Seguros",
-    "Pimentao Premium Risk",
-    "Goiaba Confianca",
-    "Tatu Tranquilo Seguradora",
-    "Abacaxi Apolice Co"
+    "Divisor Seguros",
+    "Boné Seguros",
+    "Aeroporto Seguro",
+    "Perde Seguros",
+    "Olde Seguros",
+    "Boreal Seguradora",
+    "UnfairPhone Seguros",
+    "Hard Seguros",
+    "Vida Brasileira Seguros",
+    "Impotencial Seguros",
+    "Prision Seguros",
+    "Separado Seguros"
   ].freeze
 
   EVENTS = [
@@ -48,67 +42,15 @@ class ActivitySimulator
     { level: :error, message: -> { "Timeout consultando #{FUNNY_INSURERS.sample}" } }
   ].freeze
 
-  def initialize
-    @mutex = Mutex.new
-    @thread = nil
-    @stop = false
-  end
-
-  def start
-    @mutex.synchronize do
-      return false if running?
-      @stop = false
-      @thread = Thread.new { run }
-    end
-    true
-  end
-
-  def stop
-    @mutex.synchronize do
-      return false unless running?
-      @stop = true
-    end
-    true
-  end
-
-  def running?
-    @thread && @thread.alive?
-  end
-
-  def status
-    { running: running? }
-  end
-
-  def self.random_policy_number
-    format("%09d", rand(1..999_999))
+  def perform
+    event = EVENTS.sample
+    logger = BroadcastLogger.new
+    logger.public_send(event[:level], "[Activity] #{instance_exec(&event[:message])}")
   end
 
   private
 
-  def run
-    logger = BroadcastLogger.new
-    logger.info("[Activity] started")
-    until @stop
-      emit_event(logger)
-      wait_until_next_event
-    end
-    logger.info("[Activity] stopped")
-  end
-
-  def emit_event(logger)
-    event = EVENTS.sample
-    logger.public_send(event[:level], "[Activity] #{instance_exec(&event[:message])}")
-  end
-
   def random_policy_number
-    self.class.random_policy_number
-  end
-
-  def wait_until_next_event
-    remaining = rand(MIN_SLEEP_SECONDS..MAX_SLEEP_SECONDS)
-    while remaining > 0 && !@stop
-      sleep([STOP_CHECK_INTERVAL_SECONDS, remaining].min)
-      remaining -= STOP_CHECK_INTERVAL_SECONDS
-    end
+    format("%09d", rand(1..999_999))
   end
 end

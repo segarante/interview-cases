@@ -151,7 +151,10 @@ class Import
   end
 
   def log_start
-    @logger.info("[Import] starting import for policy_holder=#{@policy_holder}")
+    banner = "=" * 70
+    @logger.info(banner)
+    @logger.info(">>> INICIANDO IMPORTAÇÃO  |  policy_holder: #{@policy_holder}  <<<")
+    @logger.info(banner)
   end
 
   def log_finish

@@ -47,6 +47,12 @@ flowchart TB
 
 O foco **não** é corrigir pequenos bugs no código existente — é pensar na arquitetura: identificar o que está limitando hoje e desenhar como evoluí-la para atender os novos requisitos descritos abaixo.
 
+### Formato
+
+- **Sessão de live coding**, conduzida junto com o entrevistador.
+pl**Você não precisa escrever código.** A entrega esperada é a **discussão da arquitetura**: apontar os problemas, justificar trade-offs e planejar a evolução.
+- Se em algum momento quiser ilustrar uma ideia com um trecho de código, fique à vontade — mas isso é opcional e não faz parte do que está sendo avaliado.
+
 ---
 
 ## Antes de começar
@@ -54,9 +60,8 @@ O foco **não** é corrigir pequenos bugs no código existente — é pensar na 
 1. Clonar o projeto
 2. Subir o Docker
 3. Acessar a aplicação no navegador
-4. Iniciar a simulação
 
-O projeto implementa, ao mesmo tempo, **o cenário de importação (o problema)** e **uma simulação desse cenário**, junto com outras partes da aplicação rodando simultaneamente. Quando você roda no navegador, ele simula o cenário de importação acontecendo **concorrente com o resto da aplicação**.
+O projeto implementa, ao mesmo tempo, **o cenário de importação (o problema)** e **uma simulação desse cenário**, junto com outras partes da aplicação rodando simultaneamente. Assim que o Docker sobe, um **clock** começa a disparar jobs periódicos (Sidekiq) que simulam a importação acontecendo **concorrente com o resto da aplicação**".
 
 ### Pré-requisitos
 
@@ -80,16 +85,12 @@ docker compose down
 
 ### O que a tela faz
 
-A página tem duas colunas.
+A página mostra um **terminal** que se conecta via WebSocket e exibe, linha a linha em tempo real, os logs gerados pelo clock + jobs de importação e pelos eventos simulados do resto da aplicação.
 
-**Esquerda — Formulários**
+Existe um painel auxiliar **oculto** que pode ser aberto/fechado com **Ctrl+K** (ou **Cmd+K** no Mac). Ele contém apenas:
 
-- **Gerar apólices**: cria um lote de apólices fictícias (origens e endossos) e salva como fixtures locais.
-- **Importar apólices**: escolhe um *policy holder* no dropdown e dispara a importação dos dados dele para o banco.
-
-**Direita — Terminal**
-
-Conecta-se via WebSocket e mostra, linha a linha em tempo real, os logs gerados durante a importação.
+- Link para o **Adminer** (inspeção do Postgres).
+- Botão **Nuke**: apaga todas as apólices do banco e todos os fixtures gerados — útil para resetar o cenário durante a entrevista.
 
 ---
 
@@ -117,6 +118,7 @@ O que precisa ser suportado daqui pra frente:
 | Termo | Definição |
 |---|---|
 | **Policy holder** | O cliente, dono da apólice. |
+| **Apólice original** | A primeira apólice de um seguro — a partir dela podem ser emitidos endossos. |
 | **LMG** (Limite Máximo da Garantia) | A soma dos valores de todos os endossos. |
 | **Insured amount** (Importância Segurada / IS) | O valor que a apólice/endosso está modificando no seguro. |
-| **Endorsement** (Endosso) | Uma alteração feita em cima do estado atual do seguro. Uma apólice pode ter vários endossos; o estado atual é sempre o último, como uma pilha. |
+| **Endorsement** (Endosso) | Uma alteração feita em cima do estado atual do seguro. Uma apólice pode ter vários endossos; o estado atual é sempre o último, como uma pilha. A numeração segue o formato `<apólice original>-<número do endosso>` (ex.: para a apólice original `000123456`, o primeiro endosso é `000123456-1`, o segundo `000123456-2`, e assim por diante). |

@@ -10,6 +10,10 @@ gem "solid_cache"
 gem "solid_queue"
 gem "solid_cable"
 
+gem "sidekiq", "~> 7.3"
+gem "clockwork", "~> 3.0"
+gem "redis", "~> 5.0"
+
 gem "bootsnap", require: false
 
 gem "kamal", require: false

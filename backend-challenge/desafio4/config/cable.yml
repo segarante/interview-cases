@@ -1,5 +1,7 @@
 development:
-  adapter: async
+  adapter: redis
+  url: <%= ENV.fetch("REDIS_URL", "redis://localhost:6390/0") %>
+  channel_prefix: desafio4_development
 
 test:
   adapter: test

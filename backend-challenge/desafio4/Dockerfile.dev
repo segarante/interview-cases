@@ -11,7 +11,9 @@ RUN apt-get update -qq && \
 ENV BUNDLE_PATH="/usr/local/bundle"
 
 COPY Gemfile Gemfile.lock ./
-RUN bundle install
+RUN BUNDLER_VERSION=$(tail -n 1 Gemfile.lock | tr -d ' ') && \
+    gem install bundler -v "$BUNDLER_VERSION" --no-document && \
+    bundle _"${BUNDLER_VERSION}"_ install
 
 COPY . .
 

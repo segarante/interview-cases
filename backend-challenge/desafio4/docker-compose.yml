@@ -16,13 +16,30 @@ services:
       timeout: 5s
       retries: 10
 
+  redis:
+    image: redis:7-alpine
+    container_name: desafio4_redis
+    command: ["redis-server", "--port", "6390"]
+    ports:
+      - "6390:6390"
+    volumes:
+      - desafio4_redisdata:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "-p", "6390", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
   app:
     build:
       context: .
       dockerfile: Dockerfile.dev
     container_name: desafio4_app
     command: >
-      bash -c "rm -f tmp/pids/server.pid &&
+      bash -c "BUNDLER_VERSION=$$(tail -n 1 Gemfile.lock | tr -d ' ') &&
+               gem list -i bundler -v $$BUNDLER_VERSION >/dev/null || gem install bundler -v $$BUNDLER_VERSION --no-document &&
+               bundle check || bundle install &&
+               rm -f tmp/pids/server.pid &&
                bin/rails db:prepare &&
                bin/rails server -b 0.0.0.0 -p 3000"
     environment:
@@ -31,6 +48,7 @@ services:
       DATABASE_PORT: 5432
       DATABASE_USER: postgres
       DATABASE_PASSWORD: postgres
+      REDIS_URL: redis://redis:6390/0
     volumes:
       - .:/rails
       - desafio4_bundle:/usr/local/bundle
@@ -38,6 +56,64 @@ services:
       - "3030:3000"
     depends_on:
       db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    tty: true
+    stdin_open: true
+
+  sidekiq:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    container_name: desafio4_sidekiq
+    command: >
+      bash -c "BUNDLER_VERSION=$$(tail -n 1 Gemfile.lock | tr -d ' ') &&
+               gem list -i bundler -v $$BUNDLER_VERSION >/dev/null || gem install bundler -v $$BUNDLER_VERSION --no-document &&
+               bundle check || bundle install &&
+               bundle exec sidekiq"
+    environment:
+      RAILS_ENV: development
+      DATABASE_HOST: db
+      DATABASE_PORT: 5432
+      DATABASE_USER: postgres
+      DATABASE_PASSWORD: postgres
+      REDIS_URL: redis://redis:6390/0
+    volumes:
+      - .:/rails
+      - desafio4_bundle:/usr/local/bundle
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    tty: true
+    stdin_open: true
+
+  clockwork:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    container_name: desafio4_clockwork
+    command: >
+      bash -c "BUNDLER_VERSION=$$(tail -n 1 Gemfile.lock | tr -d ' ') &&
+               gem list -i bundler -v $$BUNDLER_VERSION >/dev/null || gem install bundler -v $$BUNDLER_VERSION --no-document &&
+               bundle check || bundle install &&
+               bundle exec clockwork config/clock.rb"
+    environment:
+      RAILS_ENV: development
+      DATABASE_HOST: db
+      DATABASE_PORT: 5432
+      DATABASE_USER: postgres
+      DATABASE_PASSWORD: postgres
+      REDIS_URL: redis://redis:6390/0
+    volumes:
+      - .:/rails
+      - desafio4_bundle:/usr/local/bundle
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
         condition: service_healthy
     tty: true
     stdin_open: true
@@ -59,3 +135,4 @@ services:
 volumes:
   desafio4_pgdata:
   desafio4_bundle:
+  desafio4_redisdata:

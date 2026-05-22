@@ -10,6 +10,9 @@ module Desafio4
 
     config.autoload_lib(ignore: %w[assets tasks])
 
+    config.autoload_paths << Rails.root.join("sidekiq")
+    config.eager_load_paths << Rails.root.join("sidekiq")
+
     config.api_only = true
   end
 end
