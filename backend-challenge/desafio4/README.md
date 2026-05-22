@@ -108,7 +108,7 @@ O que precisa ser suportado daqui pra frente:
 
 1. **Integração com mais 10 seguradoras.**
 2. **Multi-tenant** — suportar múltiplos `policy_holders` simultaneamente.
-3. **Validação de valores** seguindo regras de negócio: se algum valor estiver inconsistente, **não importar**.
+3. **Validação de valores** seguindo regras de negócio: se algum valor estiver inconsistente, **não importar** ou outro fluxo.
 
 ---
 
